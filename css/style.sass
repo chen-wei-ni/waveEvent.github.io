@@ -1,0 +1,814 @@
+@import url('fonts.css')
+@import url('animate.css')
+@mixin size($w,$h:$w)
+    width: $w
+    height: $h
+@mixin pos()
+    position: absolute
+@mixin abpos($l:inital,$t:initial)
+    position: absolute
+    left: $l
+    top: $t
+
+$bgColor: radial-gradient(ellipse closest-side at 50% 60%, #000a77 28%, #06061b 100%)
+$bgContainer: radial-gradient(circle at 50% 105%, #46699a 0%, #1b4287 20%, #07257f 50%, #000923 100%)
+
+body
+    height: 100%
+    margin: 0
+    padding: 0
+    font-family: Roboto, "儷黑 Pro", 微软雅黑, 黑体, "LiHei Pro Medium", "Microsoft YaHei", SimHei, sans-serif
+*
+    box-sizing: border-box
+    font-size: .95rem
+    margin: 0
+    padding: 0
+a
+    text-decoration: none
+    color: currentColor
+img
+    width: 100%
+    height: auto
+    vertical-align: middle
+ul
+    list-style: none
+    padding: 0
+
+/*-- header --*/
+.header
+    position: fixed
+    z-index: 100
+    width: 100%
+    background: rgba(black,0.6)
+    .header-container
+        display: flex
+        align-items: center
+        justify-content: space-between
+        padding: .6rem 1rem
+        .logo
+            width: 120px
+            padding: 0 .5rem 0 0
+/*-- language --*/
+.language-pack
+    z-index: 100
+    margin-top: .2rem
+    &:hover
+        opacity: 1
+        .language-icon
+            border: 2px solid #44e993
+            span
+                color: #44e993
+    .language-icon
+        display: flex
+        justify-content: space-evenly
+        align-items: center
+        background: transparent
+        border-radius: 30px
+        border: 2px solid #ffffff
+        padding: .6rem .8rem
+        cursor: pointer
+        min-width: 80px
+        mix-blend-mode: difference
+        span
+            display: block
+            color: #ffffff
+            font-weight: 800
+        .language
+            &::after
+                content: '/'
+                margin: 0 .3rem
+                font-size: 14px
+                font-weight: normal
+        img
+            +size(24px)
+            filter: drop-shadow(1px 2px 2px rgba(#000,0.2))
+            margin-right: 5px
+.switch-list
+    position: fixed
+    display: flex
+    top: 5rem
+    right: 2rem
+    margin-right: 2rem
+    background: #141414fe
+    padding: 1rem 1.8rem 1rem 1.8rem
+    z-index: 99
+    &::before
+        content: ""
+        display: block
+        width: 0px
+        height: 18px
+        border-color: transparent transparent #141414fe transparent
+        border-style: solid
+        border-width: 11px 7px
+        position: absolute
+        right: 10px
+        top: -2.5rem
+    ul
+        &:nth-child(1)
+            margin-right: 22px
+        p
+            color: #ffffff7d
+            padding: .6rem 0 .6rem 1rem
+        li
+            &::after
+                content: ''
+                display: block
+                +size(140px,0.5px)
+                background-color: #ffffff5e
+                text-align: center
+            a
+                display: flex
+                color: #ffffffda
+                padding: .8rem 0 .8rem 1.2rem
+                transition: .3s
+                position: relative
+                &:hover
+                    filter: contrast(200%)
+                    transform: translate(-5px)
+                    transition: .3s
+                    color: #44e993
+            .selected
+                color: #44e993
+                span
+                    display: block
+                    +size(5px)
+                    +pos()
+                    left: 6px
+                    top: 20px
+                    background-color: #44e993
+                    border-radius: 50%
+        .last-nation
+            &::after
+                content: ''
+                display: none !important
+/*--site-main-wrapper START!--*/
+.site-main-wrapper
+    background: $bgColor
+    overflow: hidden
+    .pc-mode
+        position: relative
+        width: 100%
+        height: 36vw
+        .background
+            +size(100%,34vw)
+            +pos()
+            background: url('../images/events/bg.jpg') top center no-repeat
+            background-size: auto 100%, auto
+            animation: move-glow 8s infinite alternate
+            z-index: 10
+        .glow
+            position: absolute
+            +size(100%,35vw)
+            background: url('../images/events/background-treasure_01.png') center no-repeat
+            background-size: auto 100%, auto
+            transform-origin: 60% 50%
+            // animation: shine 2.5s infinite linear alternate
+            z-index: 18
+        .character-right
+            position: absolute
+            +size(100%,34vw)
+            background: url('../images/events/character_01.png') top center no-repeat
+            background-size: auto 100%, auto
+            transform-origin: 30% 70%
+            z-index: 19
+        .character
+            position: absolute
+            +size(100%,34vw)
+            background: url('../images/events/skyshine.jpg') top center no-repeat
+            background-size: auto 100%, auto
+            mix-blend-mode: screen
+            transform-origin: 60% 15%
+            animation: skyShining 6s
+            z-index: 17
+        .treasure
+            +pos()
+            +size(100%,34vw)
+            background: url("../images/events/lightning.jpg") top center no-repeat
+            background-size: auto 100%, auto
+            animation: lightning 2s infinite
+            mix-blend-mode: screen
+            z-index: 16
+            &::after
+                content: ""
+                position: absolute
+                +size(100%)
+                background: url('../images/events/flash.png') center no-repeat
+                background-size: cover
+                background-position: top center
+                mask-image: url("../images/events/lightning.jpg")
+                mask-position: center
+                mask-size: cover
+                animation: flashCoin 3s infinite linear
+                mix-blend-mode: overlay
+        .bg_decorate
+            position: absolute
+            +size(100%,34vw)
+            background-size: auto 100%, auto
+            perspective: 550px
+            z-index: 17
+            .coin
+                position: absolute
+                &:nth-child(1)
+                    width: 144px
+                    left: 5%
+                    top: 50%
+                &:nth-child(2)
+                    width: 64px
+                    left: 12%
+                    top: 5%
+                &:nth-child(3)
+                    width: 210px
+                    right: 10%
+                    top: 50%
+        .connect-part
+            display: none
+        .banner-slogan-en
+            background: url('../images/events/slogan_en.png') top center no-repeat
+        .banner-slogan-kr
+            background: url('../images/events/slogan_ka.png') top center no-repeat
+        .banner-slogan-cn
+            background: url('../images/events/slogan_cn.png') top center no-repeat
+        .banner-slogan-vn
+            background: url('../images/events/slogan_vn.png') top center no-repeat
+        .banner-slogan-th
+            background: url('../images/events/slogan_th.png') top center no-repeat
+        .banner-slogan-id
+            background: url('../images/events/slogan_id.png') top center no-repeat
+        .banner-slogan-jp
+            background: url('../images/events/slogan_jp.png') top center no-repeat
+        .banner-slogan-tw
+            background: url('../images/events/slogan_tw.png') top center no-repeat
+        .drop
+            +pos()
+            +size(100%,34vw)
+            background-size: auto 100%, auto
+            transform-origin: 62% 18%
+            animation: showSlogan 1s forwards cubic-bezier(0.42, 0, 0.87, 0.07)
+            z-index: 19
+            .bnTitle
+                +pos()
+                +size(100%,34vw)
+                transform-origin: 70% 50%
+                background-size: auto 100%, auto
+                animation: slide-top 2.5s infinite alternate-reverse
+                // animation-delay: 2s
+/** -- prize-- **/
+.prize-box
+    display: grid
+    place-content: center
+    position: relative
+    top: -4rem
+    z-index: 21
+    .treasure-container
+        width: 1170px
+        border-radius: 15px
+        border: 2.5px solid #ffffff
+        box-shadow: inset 0 0 35px #7ec5fc, 0 0 25px #7ec5fc
+        background: $bgContainer
+        .treasure-img
+            position: relative
+            display: inline-block
+            width: 30%
+            margin-left: .5vw
+            .inner-img
+                +pos()
+                width: 390px
+                left: 2%
+                top: -37px
+                &:nth-child(1)
+                    z-index: 20
+                    mix-blend-mode: screen
+                    animation: flicker-2 3s infinite
+        .text-prize
+            display: inline-block
+            width: 70%
+            position: relative
+            text-align: center
+            left: 30%
+            padding: .5rem 0 1.5rem 0
+            .prize
+                padding-right: 3rem
+            h4
+                font-size: 3rem
+                font-weight: bold
+                background: linear-gradient(to bottom, #ffffff, #ffe100 ,#ffe600)
+                color: transparent
+                background-clip: text
+                -webkit-background-clip: text
+                -moz-background-clip: text
+                -o-background-clip: text
+                margin: 0 0 -1rem 0
+                span
+                    font-size: 1.2rem
+            h2
+                font-size: 7.2rem
+                background: linear-gradient(to bottom, #ffe600 40%, #ffffff 50%,#ffdf11 62%,#ffe600 70%,#ffe600 80%)
+                color: transparent
+                background-clip: text
+                -webkit-background-clip: text
+                -moz-background-clip: text
+                -o-background-clip: text
+                letter-spacing: -5px
+                margin: 0
+                filter: drop-shadow(0px 5px 0px #000000)
+.main
+    position: relative
+    z-index: 21
+/*-- 指定遊戲--*/
+.square
+    position: relative
+    display: grid
+    justify-content: center
+    .part
+        width: 1170px
+        border-radius: 15px
+        border: 2.5px solid #ffffff
+        box-shadow: inset 0 0 35px #7ec5fc, 0 0 25px #7ec5fc
+        background: $bgContainer
+        padding: 2rem
+        position: relative
+        .figure
+            position: absolute
+            top: -5%
+            right: -3%
+            width: 350px
+        .small_title
+            color: #6ae6ff
+            font-size: 1.2rem
+            font-weight: 800
+            padding: 0 4rem
+        .all_games
+            padding: 1.5rem 0 1.5rem 5rem
+            p
+                color: #fff
+                font-size: 1.2rem
+/*--活動細節--*/
+.event
+    margin: 1rem 0 9rem 0
+.details
+    .word
+        padding: 0 4rem
+        ul
+            color: #fff
+            li
+                // margin: .5rem 0
+                line-height: 1.8
+                span
+                    display: block
+                    color: #6ae6ff
+                    font-size: 1.2rem
+                    font-weight: 800
+                    padding-bottom: .25rem
+                strong
+                    font-weight: 700
+                    text-decoration: underline
+    ol
+        list-style: none
+        padding-left: 1.5rem
+        li
+            &::before
+                content: '\25CB'
+                +size(5px)
+                color: #ffe600
+                display: inline-block
+                padding-right: .5rem
+.all_table
+    padding: 1.5rem 4rem
+    .prize_num
+        color: #6ae6ff
+        font-size: 1.2rem
+        font-weight: 800
+    .table
+        width: 100%
+        margin: 1rem 0
+        ul
+            filter: drop-shadow(0 0 5px #0000002f)
+            border: 2px solid #c1d8ff
+            border-radius: 10px
+            box-shadow: 0 0 15px #98adff
+            li
+                display: flex
+                text-align: center
+                background-color: rgba(#181818,0.3)
+                border-bottom: 1px solid #2856b3
+                &:nth-child(1)
+                    border-radius: 10px 10px 0 0
+                    background-color: #0fa8e9ae
+                    box-shadow: inset 0 0 10px 5px #b4d5ff5b
+                &:nth-last-child(1)
+                    border: none
+                    border-radius: 0 0 10px 10px
+                    span
+                        // background-color: rgba(#000,0.28)
+                span
+                    display: block
+                    color: #ffffff
+                    padding: .7rem 0
+                    width: 100%
+                    border-right: 1px solid #2856b3
+                    &:nth-last-child(1)
+                        border: none
+            .colored
+                span
+                    color: #ffffff
+                    padding: 1rem 0
+                    font-weight: bold
+                    position: relative
+                    border: none
+                    &:nth-last-child(1)
+                        &::after
+                            display: none
+                    &::after
+                        content: ""
+                        position: absolute
+                        top: 50%
+                        right: -1px
+                        transform: translate(-50%,-50%)
+                        width: 1px
+                        height: 12px
+                        background-color: #ffffff91
+
+.annoucement
+    position: relative
+    height: 100%
+    background-color: #072a88
+    display: flex
+    justify-content: center
+    .svg
+        position: absolute
+        top: -30px
+    .desc
+        width: 1170px
+        color: rgba(#fff,0.8)
+        padding: 1rem 4rem
+        .title
+            margin-top: .8rem
+            font-size: 1.6rem
+            letter-spacing: 2px
+            font-weight: bold
+            color: #ffffff
+        ol
+            padding: 0 0 0 1.5rem
+            li
+                margin: .8rem 0
+/*-- footer--*/
+.footer
+    height: 80px
+    background-size: cover
+    display: flex
+    align-items: center
+    justify-content: center
+    p
+        font-size: 1rem
+        color: #5176b5
+        letter-spacing: 1px
+.top_btn
+    position: fixed
+    bottom: 1rem
+    right: 1rem
+    cursor: pointer
+    z-index: 99
+    &:hover
+        opacity: 1
+        p
+            background-color: #44e993
+        span
+            color: #000
+    p
+        background: rgba(#171a19,0.6)
+        border-radius: 50%
+        +size(82px)
+        display: grid
+        justify-content: center
+        align-items: center
+        span
+            color: #44e993
+            font-weight: 800
+            display: block
+
+/*--switch another mode --*/              
+@media screen and ( max-width: 1600px )
+    .site-main-wrapper .pc-mode
+        height: 650px
+        .background, .glow,.character, .character::after, .character::before, .character-right, .treasure, .shineball,.connect-part, .bg_decorate,.drop,.drop .bnTitle
+            height: 586px
+        .bg_decorate
+            .coin
+                &:nth-child(3)
+                    width: 180px
+                    right: 2%
+@media screen and ( max-width: 1200px )
+    .site-main-wrapper .pc-mode
+        height: 585px
+        .background, .glow, .character, .character::after, .character::before, .character-right, .treasure, .shineball, .connect-part, .bg_decorate,.drop,.drop .bnTitle
+            height: 525px
+    .prize-box
+        z-index: 20
+        top: -4rem
+        .treasure-container
+            width: 954px
+            .text-prize
+                left: 27%
+                h2
+                    font-size: 6.4rem
+                .prize
+                    padding: 0
+            .treasure-img .inner-img
+                width: 318px
+                top: -25px
+    .event
+        margin: -0.5rem 0 3rem 0
+    .square
+        .part
+            width: 954px
+@media screen and ( max-width: 970px )
+    .site-main-wrapper .pc-mode
+        height: 500px
+        .background, .glow, .character, .character::after, .character::before, .character-right, .treasure, .shineball, .connect-part, .bg_decorate,.drop,.drop .bnTitle
+            height: 440px
+    .prize-box
+        .treasure-container
+            width: 800px
+            .treasure-img
+                padding: 1rem 0 0 2rem
+                .inner-img
+                    width: 290px
+                    top: -1rem
+            .text-prize
+                left: 28%
+                padding: .5rem .5rem .5rem 0
+                h2
+                    font-size: 5.2rem
+                h4
+                    font-size: 2rem
+    .square
+        h2
+            font-size: 3rem
+        .part
+            width: 800px
+    .event
+        margin: 0.5rem 0 3rem 0
+    .details
+        .decorate-img
+            display: flex
+            align-items: stretch
+        .word
+            ul
+                li
+                    line-height: 1.6
+    .annoucement
+        margin: 2rem 0 0 0
+        .desc .title
+            min-width: 6rem
+@media screen and ( max-width: 820px )
+    .site-main-wrapper .pc-mode
+        height: 430px
+        .background, .glow, .character, .character::after, .character::before, .character-right, .treasure, .shineball, .connect-part, .bg_decorate,.drop .bnTitle
+            height: 382px
+    .prize-box
+        top: -3rem
+        .treasure-container
+            width: 744px
+        .treasure-img
+            width: 318px
+            left: -3%
+        .text-prize
+            padding: 2.5rem 2rem .5rem 0
+    .square
+        .part
+            width: 744px
+@media screen and ( max-width: 760px )
+    .site-main-wrapper
+        height: 100%
+        .pc-mode
+            position: relative
+            +size(100%,113vw)
+            .background
+                height: 100%
+                background: url('../images/events/mobile_bg.jpg') top center no-repeat
+                background-size: 100%
+            .glow
+                height: 100%
+                background: url('../images/events/coinsMb.png')
+                background-size: 100%
+                &::after
+                    mask-image: url('../images/events/coinsMb.png')
+            .character
+                height: 100%
+                background: url('../images/events/skyshine_mb.jpg') top center no-repeat
+                background-size: 100%
+            .character-right
+                height: 100%
+                background: url("../images/events/mb_character.png") top center no-repeat
+                background-size: 100%
+                z-index: 18
+            .treasure
+                height: 100%
+                background: url('../images/events/lightning_mb.jpg') top center no-repeat
+                background-size: 100%
+            .bg_decorate
+                height: 100%
+                background-size: 100%
+                .coin
+                    &:nth-child(1)
+                        width: 50px
+                        top: 70%
+                    &:nth-child(2)
+                        width: 40px
+                        top: -5%
+                    &:nth-child(3)
+                        width: 60px
+                        right: 0
+                        top: 10%
+            .connect-part
+                position: absolute
+                display: block
+                +size(100%)
+                background: url("../images/events/bottom.png") bottom center no-repeat
+                background-size: 100%
+                z-index: 20
+            .banner-slogan-cn
+                background: url('../images/events/mb_slogan-cn.png') top center no-repeat
+            .banner-slogan-en
+                background: url('../images/events/mb_slogan-en.png') top center no-repeat
+            .banner-slogan-vn
+                background: url('../images/events/mb_slogan-vn.png') top center no-repeat
+            .banner-slogan-kr
+                background: url('../images/events/mb_slogan-ka.png') top center no-repeat
+            .banner-slogan-th
+                background: url('../images/events/mb_slogan-th.png') top center no-repeat
+            .banner-slogan-id
+                background: url('../images/events/mb_slogan-id.png') top center no-repeat
+            .banner-slogan-jp
+                background: url('../images/events/mb_slogan-jp.png') top center no-repeat
+            .banner-slogan-tw
+                background: url('../images/events/mb_slogan-tw.png') top center no-repeat
+            .drop
+                height: 100%
+                background-size: 100%
+                transform-origin: 50%
+                animation-name: slide-top-mb
+                .bnTitle
+                    height: 100%
+                    background-size: 100%
+                    transform-origin: 50%
+                    animation-name: jelloMb
+    .switch-list
+        padding: 1rem
+        ul
+            &:nth-child(1)
+                margin-right: 15px
+    .prize-box
+        display: block
+        margin: 0 10px
+        .treasure-container
+            width: 100%
+            display: flex
+            flex-direction: column
+            padding: 5px
+            overflow: hidden
+            .treasure-img
+                display: none
+                width: 100%
+                left: initial
+                padding: 1rem 0 2rem 2rem
+                margin: 0
+                .inner-img
+                    width: 250px
+                    position: relative
+                    margin: 0 auto
+                    left: initial
+                    top: 1rem
+                    &:nth-child(1)
+                        position: absolute
+                        left: 50%
+                        transform: translateX(-50%)
+                        animation: treasure-bling 3s infinite both
+            .text-prize
+                margin: 0
+                padding: 0
+                display: block
+                width: 100%
+                left: inherit
+                h2
+                    font-size: 14vw
+                    letter-spacing: -3px
+                h4
+                    margin: 0 0 -5px 0
+                    font-size: 2rem
+    .square
+        margin-top: 2rem
+        .figure
+            display: none
+        h2
+            font-size: 2.2rem
+            &::before,&::after
+                +size(38px)
+                vertical-align: middle
+        .part
+            width: 100%
+            padding: 1.5rem
+            .all_games
+                padding: 1.5rem 0
+                text-align: center
+    .prize-box, .chosed-game, .event
+        top: initial
+    .main
+        position: relative
+        margin: 15px 10px
+    .prize-box
+        .treasure-img-mb
+            width: 65%
+            margin: 2rem auto 0 auto
+        .text-prize
+            padding: .5rem 0
+    .square .part
+        .select-game
+            padding: 1rem 0
+            .each-game
+                .pic
+                    width: 100%
+                a
+                    p
+                        font-size: 1rem
+        .small_title
+            padding: 0
+            line-height: 1.2
+        .about_event
+            display: block
+            padding: 0 .5rem
+    .details
+        margin: 5px 0
+        .word
+            padding: 0 .2rem
+            ul
+                li
+                    line-height: 1.5
+    .all_table
+        padding: 0
+        margin: 0
+        width: 100%
+        .prize_num
+            margin: 20px 0 10px 0
+        .table
+            margin: 0
+            &:nth-child(1)
+                // margin-top: 1rem
+                margin-bottom: 0.5rem
+            ul
+                .colored
+                    span
+                        font-size: 1rem
+                li
+                    span
+                        display: flex
+                        justify-content: center
+                        align-items: center
+    .annoucement
+        .desc
+            width: 100%
+            padding: 1rem 1.2rem
+            flex-direction: column
+            .each-annouce
+                padding: 0
+            ul
+                margin: 0
+                li
+                    margin: 1rem 0
+                    line-height: 1.8
+    .footer p
+        font-size: 0.8rem
+    .header .header-container
+        padding: .4rem
+        .logo
+            width: 75px
+            padding: 0
+    .language-pack
+        .language-icon
+            padding: .4rem .6rem
+            img
+                +size(20px)
+            .language
+                font-size: .9rem
+    .switch-list
+        top: 4.2rem
+        margin-right: 0rem
+    .top_btn
+        bottom: .8rem
+        right: .5rem
+        p
+            +size(70px)
+
+@media screen and ( max-width: 320px )
+    .prize-box .treasure-container
+        .treasure-img .inner-img
+            width: 210px
+        .text-prize h4
+            font-size: 9vw
+
+    .switch-list
+        margin: .5rem
+        ul
+            li
+                &::after
+                    width: 100%
